@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "fix-my-laggg",
+	"version": "${version}",
+	"name": "FIX MY LAGGG",
+	"description": "A parody client-side mod that fakes your FPS in the F3 debug screen. Configurable fake FPS, realistic drop simulation & cloud sync.",
+	"authors": [
+		"thepir4te"
+	],
+	"contact": {
+		"sources": "https://github.com/thepir4te/fix-my-laggg"
+	},
+	"license": "MIT",
+	"icon": "assets/fix-my-laggg/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.thepir4te.fixmylaggg.FIXMYLAGGG"
+		],
+		"client": [
+			"net.thepir4te.fixmylaggg.client.FIXMYLAGGGClient"
+		]
+	},
+	"mixins": [
+		"fix-my-laggg.mixins.json",
+		{
+			"config": "fix-my-laggg.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}

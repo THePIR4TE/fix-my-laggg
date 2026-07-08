@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"package": "net.thepir4te.fixmylaggg.client.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [],
+	"client": [
+		"MinecraftClientMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
