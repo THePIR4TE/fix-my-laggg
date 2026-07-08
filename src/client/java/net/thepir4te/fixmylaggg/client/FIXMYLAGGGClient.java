@@ -42,7 +42,7 @@ public class FIXMYLAGGGClient implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (guiKey.consumeClick()) {
-                client.setScreen(new FixLagConfigScreen());
+                client.gui.setScreen(new FixLagConfigScreen());
             }
         });
 
@@ -68,7 +68,7 @@ public class FIXMYLAGGGClient implements ClientModInitializer {
     }
 
     private static int executeGui(CommandContext<FabricClientCommandSource> context) {
-        Minecraft.getInstance().setScreen(new FixLagConfigScreen());
+        Minecraft.getInstance().gui.setScreen(new FixLagConfigScreen());
         return Command.SINGLE_SUCCESS;
     }
 

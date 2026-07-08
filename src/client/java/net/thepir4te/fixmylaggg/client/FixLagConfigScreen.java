@@ -139,7 +139,7 @@ public class FixLagConfigScreen extends Screen {
         mgr.setRealisticSinkThreshold(config.realisticSinkThreshold);
 
         config.save();
-        Minecraft.getInstance().setScreen(null);
+        Minecraft.getInstance().gui.setScreen(null);
     }
 
     private static int parseInt(String s, int def) {
