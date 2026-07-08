@@ -5,11 +5,11 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -34,7 +34,7 @@ public class FIXMYLAGGGClient implements ClientModInitializer {
             Identifier.fromNamespaceAndPath("fix-my-laggg", "main")
         );
 
-        KeyMapping guiKey = KeyBindingHelper.registerKeyBinding(new KeyMapping(
+        KeyMapping guiKey = KeyMappingHelper.registerKeyMapping(new KeyMapping(
             "key.fix-my-laggg.settings",
             GLFW.GLFW_KEY_F10,
             category
@@ -47,20 +47,20 @@ public class FIXMYLAGGGClient implements ClientModInitializer {
         });
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
-            dispatcher.register(ClientCommandManager.literal("fixlag")
+            dispatcher.register(ClientCommands.literal("fixlag")
                 .executes(FIXMYLAGGGClient::executeHelp)
-                .then(ClientCommandManager.literal("help")
+                .then(ClientCommands.literal("help")
                     .executes(FIXMYLAGGGClient::executeHelp))
-                .then(ClientCommandManager.literal("status")
+                .then(ClientCommands.literal("status")
                     .executes(FIXMYLAGGGClient::executeStatus))
-                .then(ClientCommandManager.literal("reload")
+                .then(ClientCommands.literal("reload")
                     .executes(FIXMYLAGGGClient::executeReload))
-                .then(ClientCommandManager.literal("gui")
+                .then(ClientCommands.literal("gui")
                     .executes(FIXMYLAGGGClient::executeGui))
-                .then(ClientCommandManager.literal("set")
-                    .then(ClientCommandManager.argument("key", StringArgumentType.word())
+                .then(ClientCommands.literal("set")
+                    .then(ClientCommands.argument("key", StringArgumentType.word())
                         .suggests(KEY_SUGGESTIONS)
-                        .then(ClientCommandManager.argument("value", StringArgumentType.word())
+                        .then(ClientCommands.argument("value", StringArgumentType.word())
                             .suggests(VALUE_SUGGESTIONS)
                             .executes(FIXMYLAGGGClient::executeSet))))
             );

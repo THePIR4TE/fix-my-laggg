@@ -1,7 +1,7 @@
 package net.thepir4te.fixmylaggg.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -59,7 +59,6 @@ public class FixLagConfigScreen extends Screen {
     private void addFpsRow() {
         fpsInput = new EditBox(font, COL2, fpsY, INPUT_W, ROW, Component.translatable("gui.fix-my-laggg.fps"));
         fpsInput.setValue(String.valueOf(FakeFramerateManager.getInstance().getTargetFramerate()));
-        fpsInput.setFilter(s -> s.matches("\\d*"));
         addRenderableWidget(fpsInput);
 
         addRenderableWidget(Button.builder(Component.literal("-"), b -> adjustFps(-50))
@@ -86,7 +85,6 @@ public class FixLagConfigScreen extends Screen {
     private void addThresholdRow() {
         thresholdInput = new EditBox(font, COL2, threshY, INPUT_W, ROW, Component.translatable("gui.fix-my-laggg.threshold"));
         thresholdInput.setValue(String.valueOf(FakeFramerateManager.getInstance().getRealisticSinkThreshold()));
-        thresholdInput.setFilter(s -> s.matches("\\d*\\.?\\d*"));
         addRenderableWidget(thresholdInput);
 
         addRenderableWidget(Button.builder(Component.literal("-"), b -> adjustThreshold(-0.05f))
@@ -153,30 +151,30 @@ public class FixLagConfigScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics g, int mx, int my, float delta) {
-        super.render(g, mx, my, delta);
+    public void extractRenderState(GuiGraphicsExtractor g, int mx, int my, float delta) {
+        super.extractRenderState(g, mx, my, delta);
         FakeFramerateManager mgr = FakeFramerateManager.getInstance();
 
-        g.drawCenteredString(font, title, width / 2, startY - 18, GOLD);
+        g.centeredText(font, title, width / 2, startY - 18, GOLD);
 
-        g.drawString(font, Component.translatable("gui.fix-my-laggg.fps"), COL1, fpsY + 4, WHITE, false);
-        g.drawString(font, Component.translatable("gui.fix-my-laggg.fps_hint"), COL1, fpsY + ROW + 2, DIM, false);
+        g.text(font, Component.translatable("gui.fix-my-laggg.fps"), COL1, fpsY + 4, WHITE, false);
+        g.text(font, Component.translatable("gui.fix-my-laggg.fps_hint"), COL1, fpsY + ROW + 2, DIM, false);
 
-        g.drawString(font, Component.translatable("gui.fix-my-laggg.sink"), COL1, sinkY + 4, WHITE, false);
-        g.drawString(font, Component.translatable("gui.fix-my-laggg.sink_hint"), COL1, sinkY + ROW + 2, DIM, false);
+        g.text(font, Component.translatable("gui.fix-my-laggg.sink"), COL1, sinkY + 4, WHITE, false);
+        g.text(font, Component.translatable("gui.fix-my-laggg.sink_hint"), COL1, sinkY + ROW + 2, DIM, false);
 
-        g.drawString(font, Component.translatable("gui.fix-my-laggg.threshold"), COL1, threshY + 4, WHITE, false);
-        g.drawString(font, Component.translatable("gui.fix-my-laggg.threshold_hint"), COL1, threshY + ROW + 2, DIM, false);
+        g.text(font, Component.translatable("gui.fix-my-laggg.threshold"), COL1, threshY + 4, WHITE, false);
+        g.text(font, Component.translatable("gui.fix-my-laggg.threshold_hint"), COL1, threshY + ROW + 2, DIM, false);
 
-        g.drawCenteredString(font, "§7── §8" + Component.translatable("gui.fix-my-laggg.status").getString() + " §7──", width / 2, statusY, WHITE);
+        g.centeredText(font, "§7── §8" + Component.translatable("gui.fix-my-laggg.status").getString() + " §7──", width / 2, statusY, WHITE);
 
         String status = String.format("§7%s: §e%d  §7|  §7%s: §e%d  §7|  §7%s: §e%.0f",
             Component.translatable("gui.fix-my-laggg.real").getString(), mgr.getRealFps(),
             Component.translatable("gui.fix-my-laggg.fake").getString(), mgr.getCurrentFakeFps(),
             Component.translatable("gui.fix-my-laggg.peak").getString(), mgr.getPeakRealFps());
-        g.drawCenteredString(font, status, width / 2, statusY + 12, WHITE);
+        g.centeredText(font, status, width / 2, statusY + 12, WHITE);
 
-        g.drawCenteredString(font, Component.translatable("gui.fix-my-laggg.hint"), width / 2, statusY + 28, 0xFF666666);
+        g.centeredText(font, Component.translatable("gui.fix-my-laggg.hint"), width / 2, statusY + 28, 0xFF666666);
     }
 
     @Override
